@@ -4,11 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["Yakovishin Timofey"]
 readme = "README.md"
-packages = [{include = "python_project_50"}]
+packages = [{include = "gendiff"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 
+[tool.poetry.scripts]
+gendiff = "gendiff.scripts.gendiff:main"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
