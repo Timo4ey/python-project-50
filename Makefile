@@ -1,2 +1,17 @@
 lint:
-	poetry run flake8 python_project_50
+	poetry run flake8 gendiff
+
+gen-diff:
+	poetry run gendiff
+
+build:lint
+	poetry build
+
+publish:
+	poetry publish --dry-run
+
+uninstall-hexlet:
+	pip uninstall hexlet_code -y
+
+package-install: # python3 -m pip install --user dist/*.whl
+	python3 -m pip install dist/*.whl
