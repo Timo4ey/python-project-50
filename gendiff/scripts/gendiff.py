@@ -5,8 +5,7 @@ def main():
     description = 'Compares two configuration files and shows a difference.'
     parser = argparse.ArgumentParser(
         prog='gendiff',
-        description=description,
-        epilog='Text at the bottom of help')
+        description=description)
     parser.add_argument('first_file')
     parser.add_argument('second_file')
 
