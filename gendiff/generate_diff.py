@@ -22,13 +22,10 @@ def find_paths_to_files(file_path1: json, file_path2: json) -> tuple:
     return first_file, second_file
 
 
-def generate_diff(file_path1: dict, file_path2: dict) -> str:
-    first_file, second_file = find_paths_to_files(file_path1, file_path2)
-    output = '{'
+def find_diff(array, first_file, second_file):
+    output = ''
     frame = '\n  {} {}: {}'
-    keys = list({*second_file.keys(), *first_file.keys()})
-    keys.sort()
-    for k in keys:
+    for k in array:
         key, key2 = check_bool(first_file.get(k)), \
             check_bool(second_file.get(k))
         if first_file.get(k) == second_file.get(k):
@@ -40,7 +37,15 @@ def generate_diff(file_path1: dict, file_path2: dict) -> str:
         else:
             output += frame.format('-', k, key)
             output += frame.format('+', k, key2)
-    output += '\n}'
+    return output
+
+
+def generate_diff(file_path1: dict, file_path2: dict) -> str:
+    first_file, second_file = find_paths_to_files(file_path1, file_path2)
+    keys = list({*second_file.keys(), *first_file.keys()})
+    keys.sort()
+    output = f"{'{'}{find_diff(keys, first_file, second_file)}\n{'}'}"
+
     return output
 
 
