@@ -33,13 +33,13 @@ def generate_diff(file_path1: dict, file_path2: dict) -> str:
             check_bool(second_file.get(k))
         if first_file.get(k) == second_file.get(k):
             output += frame.format(' ', k, key)
-        elif (key is not None) and (key2 is None):
-            output += frame.format('-', k, key)
-        elif (key is None) and (key2 is not None):
-            output += frame.format('+', k, key2)
+        # elif (key is not None) and (key2 is None):
+        #     output += frame.format('-', k, key)
+        # elif (key is None) and (key2 is not None):
+        #     output += frame.format('+', k, key2)
         else:
-            output += frame.format('-', k, key)
-            output += frame.format('+', k, key2)
+            output += frame.format('-', k, key) if (key is not None) else ''
+            output += frame.format('+', k, key2) if (key2 is not None) else ''
     output += '\n}'
     return output
 
