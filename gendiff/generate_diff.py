@@ -22,20 +22,30 @@ def find_paths_to_files(file_path1: json, file_path2: json) -> tuple:
     return first_file, second_file
 
 
-def generate_diff(file_path1: dict, file_path2: dict) -> str:
+def prepare_data(file_path1, file_path2):
     first_file, second_file = find_paths_to_files(file_path1, file_path2)
-    output = '{'
-    frame = '\n  {} {}: {}'
     keys = list({*second_file.keys(), *first_file.keys()})
     keys.sort()
+    return first_file, second_file, keys
+
+
+def generate_keys_to_format(key, first_file, second_file):
+    return check_bool(first_file.get(key)), check_bool(second_file.get(key))
+
+
+def generate_diff(file_path1: dict, file_path2: dict) -> str:
+    first_file, second_file, keys = prepare_data(file_path1, file_path2)
+    output = '{'
+    frame = '\n  {} {}: {}'
     for k in keys:
-        key, key2 = check_bool(first_file.get(k)), \
-            check_bool(second_file.get(k))
+        key, key2 = generate_keys_to_format(k, first_file, second_file)
         if first_file.get(k) == second_file.get(k):
             output += frame.format(' ', k, key)
         else:
-            output += frame.format('-', k, key) if (key is not None) else ''
-            output += frame.format('+', k, key2) if (key2 is not None) else ''
+            output += frame.format('-', k, key) if \
+                (key is not None) else ''
+            output += frame.format('+', k, key2) if \
+                (key2 is not None) else ''
     output += '\n}'
     return output
 
