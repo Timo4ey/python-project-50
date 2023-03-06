@@ -3,6 +3,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Timo4ey/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Timo4ey/python-project-50/actions)
 
+### My Github Actions Test
+[![Tests Status](https://github.com/Timo4ey/python-project-50/actions/workflows/genndiff.yml/badge.svg)](https://github.com/Timo4ey/python-project-50/actions/workflows/genndiff.yml)
+
 ### Maintainability Badge
 [![Maintainability](https://api.codeclimate.com/v1/badges/359f6c5da096b7b6cc8c/maintainability)](https://codeclimate.com/github/Timo4ey/python-project-50/maintainability)
 
