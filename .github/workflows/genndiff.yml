@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repo
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
