@@ -26,12 +26,11 @@ jobs:
       - name: Run Pytest
         run: |
           make check
-      - name: Run Test Coverage
+      - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         if: github.ref_name == 'main'
         env:
-          CC_TEST_REPORT_ID: ${{ secrets.TEST_REPORTER_ID2 }}
+          CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID2 }}
         with:
-          run: ls -la /home/runner/work/python-project-50/python-project-50/
           CoverageCommand: make tests-coverage
           debug: true
