@@ -16,8 +16,8 @@ uninstall-hexlet:
 package-install: # python3 -m pip install --user dist/*.whl
 	python3 -m pip install dist/*.whl
 
-tests:
+check:
 	pytest -v
 
-tests-cov:
+tests-coverage:
 	poetry run pytest --cov -v
