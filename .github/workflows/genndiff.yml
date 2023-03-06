@@ -1,0 +1,11 @@
+name: Generate differences
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      name: Clone repo
+        - uses: action/checkout@3
