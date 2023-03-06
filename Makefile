@@ -17,7 +17,7 @@ package-install: # python3 -m pip install --user dist/*.whl
 	python3 -m pip install dist/*.whl
 
 check:
-	pytest -v
+	poetry run pytest -v
 
 tests-coverage:
 	poetry run pytest --cov -v

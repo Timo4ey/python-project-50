@@ -25,6 +25,4 @@ jobs:
           make lint
       - name: Run Pytest
         run: |
-          pwd
-          ls -la
           make check
