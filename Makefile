@@ -21,3 +21,6 @@ check:
 
 tests-coverage:
 	poetry run pytest --cov -v
+
+install:
+	poetry install
