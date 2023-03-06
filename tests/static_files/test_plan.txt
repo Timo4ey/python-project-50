@@ -1,0 +1,7 @@
+test_generate_diff:
+    if a == b
+    if a != b
+    if a {} and b {'a': 1}
+    if a {'a': 1} and b {}
+    if a {} and b {}
+
