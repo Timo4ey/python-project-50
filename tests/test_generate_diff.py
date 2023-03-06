@@ -1,13 +1,8 @@
 import pytest
 from gendiff.generate_diff import find_files, check_bool, get_value_from_two_dicts, generate_diff
+from gendiff.scripts.gendiff import command
 import os
-
-
-# def test_find_files():
-#     path1 = '.tests/fixtures/'
-#     path2 = '../.github/workflows/'
-#     assert find_files(path1) == ['.tests/fixtures/test_1_file1.json', '.tests/fixtures/test_1_file2.json']
-#     assert find_files(path2) == ['../.github/workflows/README.md', '../.github/workflows/hexlet-check.yml']
+import subprocess
 
 
 def test_check_bool():
@@ -63,3 +58,13 @@ def test_generate_diff():
     file2 = os.path.abspath('tests/fixtures/test_4_empty_file1.json')
     with open(directory5, 'r') as f:
         assert generate_diff(file1, file2) == f.read()
+
+
+def test_command():
+    execute = subprocess.getoutput("poetry run gendiff -f plain tests/fixtures/test_1_file1.json tests/fixtures/test_1_file2.json")
+    directory = os.path.abspath('tests/fixtures/test1_plain_json.txt')
+    with open(directory, 'r') as f:
+        assert execute == f.read()
+
+
+
