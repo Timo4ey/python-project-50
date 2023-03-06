@@ -4,14 +4,15 @@ import os
 
 def find_files(path):
     directory = os.walk(os.path.abspath(path))
-    files_dir = [f'{path}{x}' for x in list(
-       directory)[0][-1][::-1]]
+    files_dir = [f'{path}{x}' for x in list(directory)[0][-1][::-1]]
     return files_dir
 
 
 def check_bool(predicate):
     encode_to_js = json.JSONEncoder().encode
     if type(predicate) is bool:
+        return encode_to_js(predicate)
+    if predicate is None:
         return encode_to_js(predicate)
     return predicate
 
@@ -30,7 +31,8 @@ def prepare_data(file_path1, file_path2):
 
 
 def get_value_from_two_dicts(key, first_file, second_file):
-    return check_bool(first_file.get(key)), check_bool(second_file.get(key))
+    return check_bool(
+        first_file.get(key, type)), check_bool(second_file.get(key, type))
 
 
 def generate_diff(file_path1, file_path2) -> str:
@@ -43,10 +45,13 @@ def generate_diff(file_path1, file_path2) -> str:
             output += frame.format(' ', k, key)
         else:
             output += frame.format('-', k, key) if \
-                (key is not None) else ''
+                (key is not type) else ''
             output += frame.format('+', k, key2) if \
-                (key2 is not None) else ''
+                (key2 is not type) else ''
     output += '\n}'
+
+    if len(output) <= 3:
+        return str(first_file)
     return output
 
 
