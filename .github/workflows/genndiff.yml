@@ -7,5 +7,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      name: Clone repo
-        - uses: action/checkout@3
+      - name: Clone repo
+        uses: action/checkout@3
