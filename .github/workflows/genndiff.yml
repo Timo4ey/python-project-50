@@ -27,5 +27,10 @@ jobs:
         run: |
           make check
       - name: Run Test Coverage
-        run:
-          make tests-coverage
+        uses: paambaati/codeclimate-action@v3.2.0
+        if: github.ref_name == 'main'
+        env:
+          CC_TEST_REPORT_ID: ${{ secrets.CODECLIMATE }}
+        with:
+          CoverageCommand: make tests-coverage
+          debug: true
