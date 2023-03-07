@@ -118,7 +118,7 @@ def test_generate_diff_yml():
 
 
 def test_command():
-    execute = subprocess.getoutput("poetry run gendiff -f plain tests/fixtures/json_tests/test_1_file1.json tests/fixtures/json_tests/test_1_file2.json")
+    execute = subprocess.getoutput("poetry run gendiff -f plain test_1_file1.json test_1_file2.json")
     directory = os.path.abspath('tests/fixtures/json_tests/test1_plain_json.txt')
     with open(directory, 'r') as f:
         assert execute == f.read()

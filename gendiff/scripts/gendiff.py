@@ -1,5 +1,6 @@
 import argparse
 from gendiff.generate_diff import generate_diff
+from gendiff.prepare_data.prepare_data import find_files
 
 
 def command():
@@ -18,7 +19,8 @@ def command():
 
 def main():
     file1, file2 = command()
-    diff = generate_diff(file1, file2)
+    path1, path2 = find_files(file1, file2)
+    diff = generate_diff(path1, path2)
     print(diff)
 
 

@@ -4,10 +4,18 @@ import yaml
 from yaml import Loader
 
 
-def find_files(path):
-    directory = os.walk(os.path.abspath(path))
-    files_dir = [f'{path}{x}' for x in list(directory)[0][-1][::-1]]
-    return files_dir
+def find_files(file1, file2):
+    file_type1, file_type2 = check_type_of_file(file1, file2)
+    file_type1 = file_type1 if file_type1 in ('json', 'yml') else 'yml'
+    file_type2 = file_type2 if file_type2 in ('json', 'yml') else 'yml'
+    if file_type1 == file_type2:
+        paths = {
+            "json": './tests/fixtures/json_tests/',
+            "yml": './tests/fixtures/yml_tests/'}
+        path1 = os.path.abspath(paths.get(file_type1))
+        directory = list(os.walk(path1))[0][2]
+        if file1 in directory and file2 in directory:
+            return f'{path1}/{file1}', f'{path1}/{file2}'
 
 
 def check_type_of_file(file_path1, file_path2):
