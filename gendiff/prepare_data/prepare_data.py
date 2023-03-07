@@ -57,13 +57,20 @@ def serialize_output(string: str) -> str:
     return output
 
 
+def get_unique_keys(dict1: dict, dict2: dict) -> list:
+    array1 = dict1 if not isinstance(dict1, dict) else dict1.keys()
+    array2 = dict2 if not isinstance(dict2, dict) else dict2.keys()
+    keys = list({*array1, *array2})
+    keys.sort()
+    return keys
+
+
 def prepare_data(file_path1, file_path2):
     first_type, second_type = check_type_of_file(file_path1, file_path2)
     is_same_type(first_type, second_type)
     func = handle_load_files(first_type)
 
     first_file, second_file = func(file_path1, file_path2)
-    keys = list({*second_file.keys(), *first_file.keys()})
-    keys.sort()
+    keys = get_unique_keys(first_file, second_file)
 
     return first_file, second_file, keys

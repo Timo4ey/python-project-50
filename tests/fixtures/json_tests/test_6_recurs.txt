@@ -1,0 +1,11 @@
+{
+   setting1: Value 1,
+   setting2: 200,
+ + setting3: false,
+   setting3: true,
+ + setting4: uuuu,
+   setting6: {
+ -   doge: wow
+     key: value,
+   }
+}
