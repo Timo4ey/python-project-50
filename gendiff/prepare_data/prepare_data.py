@@ -1,5 +1,6 @@
 import json
 import os
+import yaml
 
 
 def find_files(path):
@@ -29,6 +30,12 @@ def download_two_json_files(file_path1: json, file_path2: json) -> tuple:
     return first_file, second_file
 
 
+def download_two_yml_files(file_path1: yaml, file_path2: yaml):
+    first_file = yaml.load(open(file_path1))
+    second_file = yaml.load(open(file_path2))
+    return first_file, second_file
+
+
 def is_same_type(array):
     file1, file2 = array
     file1 = check_type_of_file(file1)
@@ -41,12 +48,11 @@ def is_same_type(array):
 def handler(file_path1, file_path2):
     rout = {
         "json": download_two_json_files,
-        "yml": int
     }
     files_types = check_type_of_file(file_path1, file_path2)
     first_file, _ = files_types
     if is_same_type(files_types):
-        return rout.get(first_file)(file_path1, file_path2)
+        return rout.get(first_file, )(file_path1, file_path2)
 
 
 def prepare_data(file_path1, file_path2):
