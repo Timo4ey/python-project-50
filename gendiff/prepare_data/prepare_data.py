@@ -9,15 +9,6 @@ def find_files(path):
     return files_dir
 
 
-def check_bool(predicate):
-    encode_to_js = json.JSONEncoder().encode
-    if type(predicate) is bool:
-        return encode_to_js(predicate)
-    if predicate is None:
-        return encode_to_js(predicate)
-    return predicate
-
-
 def check_type_of_file(file_path1, file_path2):
     first_file_type = file_path1[file_path1.rfind('.') + 1:]
     second_file_type = file_path2[file_path2.rfind('.') + 1:]
@@ -53,6 +44,14 @@ def handler(file_path1, file_path2):
     first_file, _ = files_types
     if is_same_type(files_types):
         return rout.get(first_file, )(file_path1, file_path2)
+
+
+def serialize_output(string: str) -> str:
+    output = string.replace('True', 'true')
+    output = output.replace('False', 'false')
+    output = output.replace('None', 'null')
+    return output
+
 
 
 def prepare_data(file_path1, file_path2):

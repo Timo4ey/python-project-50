@@ -1,11 +1,10 @@
 from gendiff.prepare_data.prepare_data import (find_files,
-                                               check_bool,
-                                               prepare_data)
+                                               prepare_data,
+                                               serialize_output)
 
 
 def get_value_from_two_dicts(key, first_file, second_file):
-    return check_bool(
-        first_file.get(key, type)), check_bool(second_file.get(key, type))
+    return first_file.get(key, type), second_file.get(key, type)
 
 
 def generate_diff(file_path1, file_path2) -> str:
@@ -25,6 +24,7 @@ def generate_diff(file_path1, file_path2) -> str:
 
     if len(output) <= 3:
         return str(first_file)
+    output = serialize_output(output)
     return output
 
 

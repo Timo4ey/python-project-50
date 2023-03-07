@@ -1,25 +1,16 @@
 import pytest
 from gendiff.generate_diff import get_value_from_two_dicts, generate_diff
-from gendiff.prepare_data.prepare_data import find_files, check_bool
 from gendiff.scripts.gendiff import command
 import os
 import subprocess
 
 
-def test_check_bool():
-    assert check_bool(True) == 'true'
-    assert check_bool(False) == 'false'
-    assert check_bool(0) == 0
-    assert check_bool([]) == []
-    assert check_bool(1) == 1
-
-
 def test_get_value_from_two_dicts():
     assert get_value_from_two_dicts('a', {'a': 1}, {'a': 2}) == (1, 2)
-    assert get_value_from_two_dicts('a', {'a': False}, {'a': 2}) == ('false', 2)
-    assert get_value_from_two_dicts('a', {'a': 1}, {'a': True}) == (1, 'true')
-    assert get_value_from_two_dicts('a', {'a': False}, {'a': True}) == ('false', 'true')
-    assert get_value_from_two_dicts('a', {'a': None}, {'a': True}) == ('null', 'true')
+    assert get_value_from_two_dicts('a', {'a': False}, {'a': 2}) == (False, 2)
+    assert get_value_from_two_dicts('a', {'a': 1}, {'a': True}) == (1, True)
+    assert get_value_from_two_dicts('a', {'a': False}, {'a': True}) == (False, True)
+    assert get_value_from_two_dicts('a', {'a': None}, {'a': True}) == (None, True)
 
 
 def test_generate_diff():
