@@ -2,9 +2,6 @@ import json
 import os
 
 
-# import yaml
-
-
 def find_files(path):
     directory = os.walk(os.path.abspath(path))
     files_dir = [f'{path}{x}' for x in list(directory)[0][-1][::-1]]
@@ -40,6 +37,7 @@ def is_same_type(array):
         return True
     return False
 
+
 def handler(file_path1, file_path2):
     rout = {
         "json": download_two_json_files,
@@ -49,6 +47,7 @@ def handler(file_path1, file_path2):
     first_file, _ = files_types
     if is_same_type(files_types):
         return rout.get(first_file)(file_path1, file_path2)
+
 
 def prepare_data(file_path1, file_path2):
     first_file, second_file = download_two_json_files(file_path1, file_path2)
