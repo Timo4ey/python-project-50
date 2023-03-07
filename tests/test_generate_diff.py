@@ -1,5 +1,6 @@
 import pytest
-from gendiff.generate_diff import find_files, check_bool, get_value_from_two_dicts, generate_diff
+from gendiff.generate_diff import get_value_from_two_dicts, generate_diff
+from gendiff.prepare_data.prepare_data import find_files, check_bool
 from gendiff.scripts.gendiff import command
 import os
 import subprocess

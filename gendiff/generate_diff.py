@@ -1,33 +1,4 @@
-import json
-import os
-
-
-def find_files(path):
-    directory = os.walk(os.path.abspath(path))
-    files_dir = [f'{path}{x}' for x in list(directory)[0][-1][::-1]]
-    return files_dir
-
-
-def check_bool(predicate):
-    encode_to_js = json.JSONEncoder().encode
-    if type(predicate) is bool:
-        return encode_to_js(predicate)
-    if predicate is None:
-        return encode_to_js(predicate)
-    return predicate
-
-
-def download_two_json_files(file_path1: json, file_path2: json) -> tuple:
-    first_file = json.load(open(file_path1))
-    second_file = json.load(open(file_path2))
-    return first_file, second_file
-
-
-def prepare_data(file_path1, file_path2):
-    first_file, second_file = download_two_json_files(file_path1, file_path2)
-    keys = list({*second_file.keys(), *first_file.keys()})
-    keys.sort()
-    return first_file, second_file, keys
+from gendiff.prepare_data.prepare_data import find_files, check_bool, prepare_data
 
 
 def get_value_from_two_dicts(key, first_file, second_file):
