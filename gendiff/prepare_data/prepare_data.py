@@ -53,7 +53,6 @@ def serialize_output(string: str) -> str:
     return output
 
 
-
 def prepare_data(file_path1, file_path2):
     first_file, second_file = download_two_json_files(file_path1, file_path2)
     keys = list({*second_file.keys(), *first_file.keys()})
