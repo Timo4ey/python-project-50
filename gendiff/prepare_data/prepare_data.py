@@ -1,6 +1,7 @@
 import json
 import os
 import yaml
+from yaml import Loader
 
 
 def find_files(path):
@@ -22,8 +23,8 @@ def download_two_json_files(file_path1: json, file_path2: json) -> tuple:
 
 
 def download_two_yml_files(file_path1: yaml, file_path2: yaml):
-    first_file = yaml.load(open(file_path1))
-    second_file = yaml.load(open(file_path2))
+    first_file = yaml.load(open(file_path1), Loader=Loader)
+    second_file = yaml.load(open(file_path2), Loader=Loader)
     return first_file, second_file
 
 
@@ -36,14 +37,14 @@ def is_same_type(array):
     return False
 
 
-def handler(file_path1, file_path2):
+def handle_load_files(file_path1, file_path2):
     rout = {
         "json": download_two_json_files,
     }
     files_types = check_type_of_file(file_path1, file_path2)
     first_file, _ = files_types
-    if is_same_type(files_types):
-        return rout.get(first_file, )(file_path1, file_path2)
+    outcome = rout.get(first_file, download_two_yml_files)
+    return outcome
 
 
 def serialize_output(string: str) -> str:
@@ -53,9 +54,10 @@ def serialize_output(string: str) -> str:
     return output
 
 
-
 def prepare_data(file_path1, file_path2):
-    first_file, second_file = download_two_json_files(file_path1, file_path2)
+    func = handle_load_files(file_path1, file_path2)
+    first_file, second_file = func(file_path1, file_path2)
+    handle_load_files(file_path1, file_path2)
     keys = list({*second_file.keys(), *first_file.keys()})
     keys.sort()
     return first_file, second_file, keys
