@@ -51,6 +51,12 @@ def test_generate_diff():
     with open(directory5, 'r') as f:
         assert generate_diff(file1, file2) == f.read()
 
+    directory = os.path.abspath('tests/fixtures/json_tests/test1_plain_json.txt')
+    file1 = os.path.abspath('tests/fixtures/yml_tests/test_1_yaml_file1.yml')
+    file2 = os.path.abspath('tests/fixtures/yml_tests/test_1_yaml_file2.yml')
+    with open(directory, 'r') as f:
+        assert generate_diff(file1, file2) == f.read()
+
 
 def test_command():
     execute = subprocess.getoutput("poetry run gendiff -f plain tests/fixtures/json_tests/test_1_file1.json tests/fixtures/json_tests/test_1_file2.json")

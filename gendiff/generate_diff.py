@@ -1,6 +1,7 @@
 from gendiff.prepare_data.prepare_data import (find_files,
                                                prepare_data,
-                                               serialize_output)
+                                               serialize_output
+                                               )
 
 
 def get_value_from_two_dicts(key, first_file, second_file):
