@@ -1,4 +1,6 @@
-from gendiff.prepare_data.prepare_data import find_files, check_bool, prepare_data
+from gendiff.prepare_data.prepare_data import (find_files,
+                                               check_bool,
+                                               prepare_data)
 
 
 def get_value_from_two_dicts(key, first_file, second_file):
