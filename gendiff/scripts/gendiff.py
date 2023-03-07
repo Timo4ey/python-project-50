@@ -10,7 +10,7 @@ def command():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', metavar='FORMAT',
-                        help="set format of output")
+                        help="set format of output", default="plain")
 
     args = parser.parse_args()
     return args.first_file, args.second_file
