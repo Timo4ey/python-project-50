@@ -7,9 +7,22 @@ def get_value_from_two_dicts(key, first_file, second_file):
     return first_file.get(key, type), second_file.get(key, type)
 
 
+def handler(file_path1, file_path2):
+    if type(file_path1) is not dict and type(file_path2) is not dict:
+        first_file, second_file, keys = prepare_data(file_path1, file_path2)
+    else:
+        value = list({*file_path2.keys(), *file_path1.keys()})
+        value.sort()
+        first_file, second_file, keys = file_path1, file_path2, value
+    return first_file, second_file, keys
+
+
 def generate_diff(file_path1, file_path2) -> str:
-    first_file, second_file, keys = prepare_data(file_path1, file_path2)
+
+    first_file, second_file, keys = handler(file_path1, file_path2)
+
     frame = '\n  {} {}: {}'
+
     if not first_file and not second_file:
         return f'{first_file}'
 
