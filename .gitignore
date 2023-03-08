@@ -3,3 +3,5 @@ __pycache__
 dist/
 coverage.xml
 converter/
+tests/temp_file.py
+temp_file.py
