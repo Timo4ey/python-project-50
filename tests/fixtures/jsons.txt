@@ -1,0 +1,72 @@
+{
+  "host": "hexlet.io",
+  "timeout": 50,
+  "proxy": "123.234.53.22",
+  "follow": false
+}
+
+
+
+{
+  "timeout": 20,
+  "verbose": true,
+  "host": "hexlet.io"
+}
+
+
+
+{
+  "name": "Molecule Man",
+  "age": 29,
+  "secretIdentity": "Dan Jukes",
+  "powers": "Radiation resistance"
+}
+
+
+
+{
+  "name": "Molecule Man",
+  "age": 29,
+  "secretIdentity": "Dan Jukes",
+  "country": "America"
+}
+
+
+
+{
+  "name": "John",
+  "age": 30,
+  "car": null
+}
+
+
+
+{
+  "name": "John",
+  "age": 30,
+  "car": null
+}
+
+
+
+{
+
+}
+
+
+
+{
+  "name": "John"
+}
+
+
+
+{
+  "name": "John"
+}
+
+
+
+{
+
+}

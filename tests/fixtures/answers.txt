@@ -1,0 +1,38 @@
+{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}
+
+
+
+{
+    age: 29
+  + country: America
+    name: Molecule Man
+  - powers: Radiation resistance
+    secretIdentity: Dan Jukes
+}
+
+
+
+{
+    age: 30
+    car: null
+    name: John
+}
+
+
+
+{
+  + name: John
+}
+
+
+
+{
+  - name: John
+}
