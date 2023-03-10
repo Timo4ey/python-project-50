@@ -61,9 +61,23 @@ def prepare_data(file_path1, file_path2):
     first_type, second_type = check_type_of_file(file_path1, file_path2)
     is_same_type(first_type, second_type)
     func = handle_load_files(first_type)
+    js_path = "../tests/fixtures/json_tests/"
+    # path1, path2 = find_files(file_path1, file_path2),
+    first_file, second_file = func(js_path+file_path1, js_path+file_path2)
+    # keys = list({*second_file.keys(), *first_file.keys()})
+    # keys.sort()
 
-    first_file, second_file = func(file_path1, file_path2)
-    keys = list({*second_file.keys(), *first_file.keys()})
-    keys.sort()
+    return first_file, second_file
 
-    return first_file, second_file, keys
+
+def get_unique_keys(first_item, second_item):
+    if isinstance(first_item, dict) and isinstance(second_item, dict):
+        value = list({*first_item.keys(), *second_item.keys()})
+    elif isinstance(first_item, dict) and not isinstance(second_item, dict):
+        value = list({*first_item.keys(), second_item})
+    elif isinstance(second_item, dict) and not isinstance(first_item, dict):
+        value = list({*second_item.keys(), first_item})
+    else:
+        value = list({second_item, first_item})
+    return value
+

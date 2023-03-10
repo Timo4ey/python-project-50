@@ -2,9 +2,10 @@ import pytest
 from gendiff.generate_diff import get_value_from_two_dicts, generate_diff
 from gendiff.scripts.gendiff import command
 import os
-import subprocess
 import yaml
 import json
+
+
 def fixture_path(file_path):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     path_to_file = os.path.join(current_dir + '/fixtures/' + file_path)
@@ -30,7 +31,6 @@ def yaml_loader(array):
     for yml in array:
         output.append(yaml.load(yml, yaml.Loader))
     return output
-
 
 
 def test_get_value_from_two_dicts():
