@@ -1,24 +1,21 @@
+import itertools
 from gendiff.prepare_data.prepare_data import (prepare_data,
                                                serialize_output,
                                                get_unique_keys, find_files
                                                )
 
 
-
-
-
-def handler(file_path1, file_path2):
-    if type(file_path1) is not dict and type(file_path2) is not dict:
-        first_file, second_file, keys = prepare_data(file_path1, file_path2)
-    else:
-        value = list({*file_path2.keys(), *file_path1.keys()})
-        value.sort()
-        first_file, second_file, keys = file_path1, file_path2, value
-    return first_file, second_file, keys
-
-
-def is_dict(*args):
-    return any(filter(lambda x: isinstance(x, dict), args))
+def check_values_forms(first_values, second_values):
+    set_of_unique_keys = None
+    if is_dict(first_values) and is_dict(second_values):
+        set_of_unique_keys = getting_unique_keys(first_values, second_values)
+    if is_dict(first_values) and is_dict(second_values) is False:
+        set_of_unique_keys = getting_unique_keys(first_values)
+        second_values = {}
+    if is_dict(first_values) is False and is_dict(second_values):
+        set_of_unique_keys = getting_unique_keys(second_values)
+        first_values = {}
+    return set_of_unique_keys
 
 
 def getting_unique_keys(*args: dict) -> list:
@@ -31,47 +28,6 @@ def getting_unique_keys(*args: dict) -> list:
     return output
 
 
-
-
-
-def get_key_value(value) -> str:
-    if not isinstance(value, dict):
-        return f'{value}'
-    output = ''
-    for key, val in value.items():
-        output += f'{key}: {get_key_value(value)}'
-    return output
-
-
-def is_not_type_or_dict(array) -> bool:
-    return not isinstance(array, dict | type)
-
-
-def is_dict(array) -> bool:
-    return isinstance(array, dict)
-
-def get_value(key, some_dict: dict) -> dict.values:
-    if isinstance(some_dict, dict):
-        return some_dict.get(key, type)
-    return type
-
-
-def is_equals(first, second):
-    return first == second
-
-def stringify(array,  replacer=" ", space_count=1):
-    def inner(array, deph=0):
-        if not isinstance(array, dict):
-            return f'{array}'
-        output = ""
-        deep_size = space_count + deph
-        space_feeler = deep_size * replacer
-        for key, value in array.items():
-            output += f'\n{space_feeler}{key}: {inner(value, deep_size)}'
-        return output
-    return inner(array)
-
-
 def get_data(file_path1, file_path2):
     first_file = second_file = 0
     dict_predicate = is_dict(file_path1)
@@ -82,129 +38,103 @@ def get_data(file_path1, file_path2):
     return first_file, second_file
 
 
-def symble_checker(symle, to_change):
-    if symle == " ":
-        return to_change
-    elif symle in ("+", "-"):
-        return ' '
-
-# def stringify(array,  , space_count=1):
-import  itertools
+def is_dict(array) -> bool:
+    return isinstance(array, dict)
 
 
-def stringify(array,  replacer=" ", space_count=1):
-    def inner(array, deph=2):
-        if not isinstance(array, dict):
-            return f'{array}'
-        output = ""
-        deep_size = space_count + deph
+def compare_two_values(space_feeler, k, value_1, value_2, depth=1):
+    frame = '{}{} {}: {}'
+    if dict not in (type(value_1), type(value_2)):
+        if value_1 == value_2 \
+                and type(value_1) not in (dict, type):
+            return [frame.format(space_feeler, '  ', k, value_1)]
+
+        elif value_1 != value_2 and \
+                type(value_1) is not type and \
+                type(value_2) is not type:
+            return [frame.format(space_feeler, ' -', k, value_1),
+                    frame.format(space_feeler, ' +', k, value_2)]
+
+        elif value_1 != value_2 and \
+                type(value_1) is not type and \
+                type(value_2) is type:
+            return [frame.format(space_feeler, ' -', k, value_1)]
+
+        elif value_1 != value_2 and \
+                type(value_1) is type and \
+                type(value_2) is not type:
+            return [frame.format(space_feeler, ' +', k, value_2)]
+    return []
+
+
+def compare_two_dicts(space_feeler, key, value_1, value_2, depth=0):
+    frame = '{}{} {}: {}'
+    next_depth = 3
+    next_depth = depth + next_depth
+    if dict in (type(value_1), type(value_2)):
+        if value_1 == value_2 and type(key) is dict \
+                and type(value_2) is dict:
+            return [frame.format(space_feeler, '  ', key, dif(value_1, value_2, depth=next_depth))]
+
+        elif value_1 != value_2 and \
+                type(value_1) is dict and \
+                type(value_2) is dict:
+            return [frame.format(space_feeler, '  ', key, dif(value_1, value_2,  depth=next_depth))]
+        elif value_1 != value_2 and \
+                type(value_1) is dict and \
+                type(value_2) is type:
+            return [frame.format(space_feeler, ' -', key, stringify(array=value_1, space_count=next_depth))]
+        elif value_1 != value_2 and \
+                type(value_1) is type and \
+                type(value_2) is dict:
+            return [frame.format(space_feeler, ' +', key, stringify(array=value_2, space_count=next_depth))]
+        elif value_1 != value_2 and \
+                type(value_1) is dict and \
+                type(value_2) is not dict:
+            return [frame.format(space_feeler, ' -', key, stringify(array=value_1, space_count=next_depth)),
+                    frame.format(space_feeler, ' +', key, value_2)]
+    return []
+
+
+def stringify(array,  replacer=" ", space_count=1, max_depth=8):
+    def inner(line, depth=4):
+        if not isinstance(line, dict):
+            return f'{line}'
+        output = []
+        deep_size = space_count + depth
         space_feeler = deep_size * replacer
-        current_feeler = replacer * deph
-        keyword = getting_unique_keys(array)
+        current_feeler = deep_size * replacer if deep_size < max_depth else (deep_size - 4) * replacer
+        keyword = getting_unique_keys(line)
         for key in keyword:
-            value = array.get(key)
-            output += f'\n{space_feeler}{key}: {inner(value, deep_size)}'
-        result = f'{"{"}{output}\n{current_feeler}{"}"}'
-        return result
+            value = line.get(key)
+            output.append(f'{space_feeler}{key}: {inner(value, deep_size)}')
+        result = itertools.chain("{", output, [current_feeler + "}"])
+        return '\n'.join(result)
     return inner(array)
 
 
-def compare_two_values(key, value_1, value_2, depth=0):
-    frame = '\n{} {}: {}'
-    if dict not in (type(value_1), type(value_2)):
-        if value_1 == value_2:
-            return frame.format(' ', key, value_1)
-        elif value_1 != value_2 and value_2 is type:
-            return frame.format('-', key, value_1)
-        elif value_1 != value_2 and value_1 is type:
-            return frame.format('+', key, value_2)
-        elif value_1 != value_2 and type not in (value_1, value_2):
-            return f"{frame.format('-', key, value_1)}\n{frame.format('+', key, value_2)}"
-    return ''
+def dif(first_dict, second_dict, depth=0, replacer=' '):
+    output = []
+
+    deep_size = depth + 1
+    space_feeler = deep_size * replacer
+    current_feeler = replacer * depth
+
+    set_of_unique_keys = check_values_forms(first_dict, second_dict)
+    for k in set_of_unique_keys:
+        key, key2 = first_dict.get(k, type), second_dict.get(k, type)
+
+        output.extend(compare_two_values(space_feeler, k, key, key2, depth=deep_size))
+        output.extend(compare_two_dicts(space_feeler, k, key, key2, depth=deep_size))
+
+    result = itertools.chain("{", output, [current_feeler + "}"])
+    return serialize_output('\n'.join(result))
+    # Надо работать с вложенностями, каждая вложеность
+    # Каждая новая вложенность это старт предыдущего ключа + 2
+    # Нужно придумать логику для зыкрывающихся скобок
 
 
-def compare_two_dicts(key, value_1, value_2, depth=2):
-    frame = '\n{} {}: {}'
-    if dict in (type(value_1), type(value_2)):
-        uniques_keys = getting_unique_keys(value_1, value_2)
-        for keyword in uniques_keys:
-            if value_1 == value_2:
-                return frame.format(' ', key, stringify(value_1, space_count=depth))
-            if value_1 == value_2 and value_2 is type:
-                return frame.format('-', keyword, stringify(value_1, space_count=depth))
-            if value_1 != value_2 and value_1 is type:
-                return frame.format('+', key, stringify(value_2, space_count=depth))
-            if value_1 != value_2 and type not in (value_1, value_2):
-                return f"{frame.format('-', keyword, stringify(value_1, space_count=depth + 1))}\n {frame.format('+', keyword, stringify(value_2, space_count=depth + 1))}"
-    return ''
-
-
-
-def generate_diff(dictionary_1, dictionary_2,  space_count: int = 1) -> str:
-
-    frame = '{}{} {}: {}'
-    replacer = ' '
-
-    def dif(first_dict, second_dict, depth=0, symble=' '):
-        output = []
-
-        deep_size = depth + 1
-        space_feeler = deep_size * replacer
-        current_feeler = replacer * depth
-        set_of_unique_keys = None
-        if is_dict(first_dict) and is_dict(second_dict):
-            set_of_unique_keys = getting_unique_keys(first_dict, second_dict)
-        if is_dict(first_dict) and is_dict(second_dict) is False:
-            set_of_unique_keys = getting_unique_keys(first_dict)
-            second_dict = {}
-        if is_dict(first_dict) is False and is_dict(second_dict):
-            set_of_unique_keys = getting_unique_keys(second_dict)
-            first_dict = {}
-        for k in set_of_unique_keys:
-
-            key, key2 = first_dict.get(k, type), second_dict.get(k, type)
-
-            if key == key2 and type(key) is dict \
-                    and type(key2) is dict:
-                output.append(frame.format(space_feeler, ' ', k, dif(key, key2,depth=deep_size + 1)))
-
-            elif key != key2 and\
-                    type(key) is dict and\
-                    type(key2) is dict:
-                output.append(frame.format(space_feeler, ' ', k, dif(key, key2,depth=deep_size +3)))
-            elif key != key2 and\
-                    type(key) is dict and\
-                    type(key2) is type:
-                output.append(frame.format(space_feeler, '-', k, stringify(array=key, space_count = deep_size + 3)))
-            elif key != key2 and\
-                    type(key) is type and\
-                    type(key2) is dict:
-                output.append(frame.format(space_feeler, '+', k, stringify(array=key2, space_count = deep_size +4)))
-            elif key != key2 and \
-                    type(key) is dict and \
-                    type(key2) is not dict:
-                output.append(frame.format(space_feeler, '-', k, stringify(array=key, space_count=deep_size + 3 )))
-                output.append(frame.format(space_feeler, '+', k, key2))
-            elif key == key2 and \
-                    type(key) not in (dict, type):
-                output.append(frame.format(space_feeler, symble, k, key))
-            elif key != key2 and \
-                    type(key) is not type and \
-                    type(key2) is not type:
-                output.append(frame.format(space_feeler, '-', k, key))
-                output.append(frame.format(space_feeler, '+', k, key2))
-            elif key != key2 and \
-                    type(key) is not type and \
-                    type(key2) is type:
-                output.append(frame.format(space_feeler, '-', k, key))
-            elif key != key2 and \
-                    type(key) is type and \
-                    type(key2) is not type:
-                output.append(frame.format(space_feeler, '+', k, key2))
-
-        # output = serialize_output(output)
-        result = itertools.chain("{", output, [current_feeler + "}"])
-        return serialize_output('\n'.join(result).strip())
+def generate_diff(dictionary_1, dictionary_2, space_count=1) -> str:
     return dif(dictionary_1, dictionary_2)
 
 
@@ -234,14 +164,16 @@ if __name__ == '__main__':
     # data = get_data('test_1_file1.json', 'test_1_file2.json')
     data = get_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
     file1, file2 = data
-    print(generate_diff(file1, file2))
+    result = generate_diff(file1, file2)
+    with open('temp_recurs.txt', 'w') as f:
+        f.write(result)
+    with open("/home/timofey/Desktop/workspace/pythonProject/difference_calculator/python-project-50/tests/fixtures/json_tests/test_5_recurs.txt", 'r') as f:
+        answer = f.read()
+        print(len(result), len(answer))
+    print(result[:276].strip(' '), '======', answer[:276], sep='\n')
+    # print(result)
+    print()
 
-# for k in key_words:
-#     key, key2 = get_value_from_two_dicts(k, first_dict, second_dict)
-#     if first_dict.get(k) == second_dict.get(k):
-#         output += frame.format(' ', k, key)
-#     else:
-#         output += frame.format('-', k, key) if \
-#             (key is not type) else ''
-#         output += frame.format('+', k, key2) if \
-#             (key2 is not type) else ''
+
+
+
