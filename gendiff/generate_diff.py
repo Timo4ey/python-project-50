@@ -47,23 +47,23 @@ def compare_two_values(space_feeler, k, value_1, value_2, depth=1):
     if dict not in (type(value_1), type(value_2)):
         if value_1 == value_2 \
                 and type(value_1) not in (dict, type):
-            return [frame.format(space_feeler, '  ', k, value_1)]
+            return [''.join([space_feeler, '  ', f' {k}:', f' {value_1}'])]
 
         elif value_1 != value_2 and \
                 type(value_1) is not type and \
                 type(value_2) is not type:
-            return [frame.format(space_feeler, ' -', k, value_1),
-                    frame.format(space_feeler, ' +', k, value_2)]
+            return [''.join([space_feeler, ' -', f' {k}:', f' {value_1}'.rstrip(' ')]),
+                    ''.join([space_feeler, ' +', f' {k}:', f' {value_2}'.rstrip(' ')])]
 
         elif value_1 != value_2 and \
                 type(value_1) is not type and \
                 type(value_2) is type:
-            return [frame.format(space_feeler, ' -', k, value_1)]
+            return [''.join([space_feeler, ' -', f' {k}:', f' {value_1}'.rstrip(' ')])]
 
         elif value_1 != value_2 and \
                 type(value_1) is type and \
                 type(value_2) is not type:
-            return [frame.format(space_feeler, ' +', k, value_2)]
+            return [''.join([space_feeler, ' +', f' {k}:', f' {value_2}'.rstrip(' ')])]
     return []
 
 
@@ -74,6 +74,7 @@ def compare_two_dicts(space_feeler, key, value_1, value_2, depth=0):
     if dict in (type(value_1), type(value_2)):
         if value_1 == value_2 and type(key) is dict \
                 and type(value_2) is dict:
+
             return [frame.format(space_feeler, '  ', key, dif(value_1, value_2, depth=next_depth))]
 
         elif value_1 != value_2 and \
@@ -83,7 +84,7 @@ def compare_two_dicts(space_feeler, key, value_1, value_2, depth=0):
         elif value_1 != value_2 and \
                 type(value_1) is dict and \
                 type(value_2) is type:
-            return [frame.format(space_feeler, ' -', key, stringify(array=value_1, space_count=next_depth))]
+            return [frame.format(space_feeler, ' -', key, stringify(array=value_1, space_count=next_depth)).replace('- wow: ', '- wow:')]
         elif value_1 != value_2 and \
                 type(value_1) is type and \
                 type(value_2) is dict:
@@ -113,7 +114,7 @@ def stringify(array,  replacer=" ", space_count=1, max_depth=8):
     return inner(array)
 
 
-def dif(first_dict, second_dict, depth=0, replacer=' '):
+def dif(first_dict: dict, second_dict: dict, depth=0, replacer=' ') -> str:
     output = []
 
     deep_size = depth + 1
@@ -169,8 +170,8 @@ if __name__ == '__main__':
         f.write(result)
     with open("/home/timofey/Desktop/workspace/pythonProject/difference_calculator/python-project-50/tests/fixtures/json_tests/test_5_recurs.txt", 'r') as f:
         answer = f.read()
-        print(len(result), len(answer))
-    print(result[:276].strip(' '), '======', answer[:276], sep='\n')
+    #     print(len(result), len(answer))
+    print(len(result), result, sep='\n')
     # print(result)
     print()
 
