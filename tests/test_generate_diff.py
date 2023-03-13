@@ -1,6 +1,5 @@
 import pytest
 from gendiff.generate_diff import generate_diff
-from gendiff.scripts.unuse_scripts.unuse_scripts import handler as get_value_from_two_dicts
 from gendiff.scripts.gendiff import command
 import os
 import yaml
