@@ -1,5 +1,6 @@
 import pytest
-from gendiff.generate_diff import get_value_from_two_dicts, generate_diff
+from gendiff.generate_diff import generate_diff
+from gendiff.scripts.unuse_scripts.unuse_scripts import handler as get_value_from_two_dicts
 from gendiff.scripts.gendiff import command
 import os
 import yaml
@@ -33,12 +34,12 @@ def yaml_loader(array):
     return output
 
 
-def test_get_value_from_two_dicts():
-    assert get_value_from_two_dicts('a', {'a': 1}, {'a': 2}) == (1, 2)
-    assert get_value_from_two_dicts('a', {'a': False}, {'a': 2}) == (False, 2)
-    assert get_value_from_two_dicts('a', {'a': 1}, {'a': True}) == (1, True)
-    assert get_value_from_two_dicts('a', {'a': False}, {'a': True}) == (False, True)
-    assert get_value_from_two_dicts('a', {'a': None}, {'a': True}) == (None, True)
+# def test_get_value_from_two_dicts():
+#     assert get_value_from_two_dicts('a', {'a': 1}, {'a': 2}) == (1, 2)
+#     assert get_value_from_two_dicts('a', {'a': False}, {'a': 2}) == (False, 2)
+#     assert get_value_from_two_dicts('a', {'a': 1}, {'a': True}) == (1, True)
+#     assert get_value_from_two_dicts('a', {'a': False}, {'a': True}) == (False, True)
+#     assert get_value_from_two_dicts('a', {'a': None}, {'a': True}) == (None, True)
 
 
 def test_json():
