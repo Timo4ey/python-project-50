@@ -1,5 +1,6 @@
 import argparse
 from gendiff.generate_diff import generate_diff
+from gendiff.prepare_data.prepare_data import download_two_json_files
 from gendiff.prepare_data.prepare_data import find_files
 
 
@@ -20,7 +21,9 @@ def command():
 def main():
     file1, file2 = command()
     path1, path2 = find_files(file1, file2)
-    diff = generate_diff(path1, path2)
+    first_data, second_data = download_two_json_files(path1, path2)
+
+    diff = generate_diff(first_data, second_data)
     print(diff)
 
 

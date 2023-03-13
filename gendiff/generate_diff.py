@@ -73,64 +73,72 @@ def compare_two_values(space_feeler, key, value_1, value_2):
 
 
 def is_dicts_equals(key, value_1, value_2) -> bool:
-    if value_1 == value_2 and type(key) is dict \
-            and type(value_2) is dict:
-        return True
-    return False
+    if dict in (type(value_1), type(value_2)):
+        if value_1 == value_2 and type(key) is dict \
+                and type(value_2) is dict:
+            return True
+        return False
 
 
 def is_both_dicts_not_equal(value_1, value_2) -> bool:
-    if value_1 != value_2 and type(value_1) is dict and type(value_2) is dict:
-        return True
-    return False
+    if dict in (type(value_1), type(value_2)):
+        if value_1 != value_2 and \
+                type(value_1) is dict and\
+                type(value_2) is dict:
+            return True
+        return False
 
 
 def is_only_first_value_dict(value_1, value_2):
-    if value_1 != value_2 and \
-            type(value_1) is dict and \
-            type(value_2) is type:
-        return True
-    return False
+    if dict in (type(value_1), type(value_2)):
+        if value_1 != value_2 and \
+                type(value_1) is dict and \
+                type(value_2) is type:
+            return True
+        return False
 
 
 def is_only_second_value_dict(value_1, value_2):
-    if value_1 != value_2 and type(value_1) is type and type(value_2) is dict:
-        return True
+    if dict in (type(value_1), type(value_2)):
+        if value_1 != value_2 and \
+                type(value_1) is type and \
+                type(value_2) is dict:
+            return True
     return False
 
 
 def is_first_dict_second_value(value_1, value_2):
-    if value_1 != value_2 and type(
-            value_1) is dict and type(value_2) is not dict:
-        return True
+    if dict in (type(value_1), type(value_2)):
+        if value_1 != value_2 and type(
+                value_1) is dict and type(value_2) is not dict:
+            return True
     return False
 
 
 def compare_two_dicts(space_feeler, key, value_1, value_2, depth=0):
     next_depth = 3
     next_depth = depth + next_depth
-    if dict in (type(value_1), type(value_2)):
-        # 1
-        if is_dicts_equals(key, value_1, value_2):
-            return convert_to_format(space_feeler, ' ', key, dif(
-                value_1, value_2, depth=next_depth))
-        # 2
-        elif is_both_dicts_not_equal(value_1, value_2):
-            return convert_to_format(space_feeler, ' ', key, dif(
-                value_1, value_2, depth=next_depth))
-        # 3
-        elif is_only_first_value_dict(value_1, value_2):
-            return convert_to_format(space_feeler, '-', key, stringify(
-                array=value_1, space_count=next_depth))
-        # 4
-        elif is_only_second_value_dict(value_1, value_2):
-            return convert_to_format(space_feeler, '+', key, stringify(
-                array=value_2, space_count=next_depth))
-        # 5
-        elif is_first_dict_second_value(value_1, value_2):
-            return [*convert_to_format(space_feeler, '-', key, stringify(
-                array=value_1, space_count=next_depth)),
-                *convert_to_format(space_feeler, '+', key, value_2)]
+    # 1
+    if is_dicts_equals(key, value_1, value_2):
+        return convert_to_format(space_feeler, ' ', key, dif(
+            value_1, value_2, depth=next_depth))
+    # 2
+    if is_both_dicts_not_equal(value_1, value_2):
+        return convert_to_format(space_feeler, ' ', key, dif(
+            value_1, value_2, depth=next_depth))
+    # 3
+    if is_only_first_value_dict(value_1, value_2):
+        return convert_to_format(space_feeler, '-', key, stringify(
+            array=value_1, space_count=next_depth))
+    # 4
+    if is_only_second_value_dict(value_1, value_2):
+        return convert_to_format(space_feeler, '+', key, stringify(
+            array=value_2, space_count=next_depth))
+    # 5
+    if is_first_dict_second_value(value_1, value_2):
+        return [*convert_to_format(space_feeler, '-', key, stringify(
+            array=value_1, space_count=next_depth)),
+            *convert_to_format(space_feeler, '+', key, value_2)]
     return []
 
 
@@ -186,7 +194,3 @@ if __name__ == '__main__':
     file1, file2 = data
     result = generate_diff(file1, file2)
     print(result)
-
-
-
-
