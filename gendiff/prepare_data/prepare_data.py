@@ -12,8 +12,8 @@ def find_files(file1, file2):
     file_type2 = file_type2 if file_type2 in ('json', 'yml') else 'yml'
     if file_type1 == file_type2:
         paths = {
-            "json": '/tests/fixtures/json_tests/',
-            "yml": '/tests/fixtures/yml_tests/'}
+            "json": '/tests/fixtures/json_tests',
+            "yml": '/tests/fixtures/yml_tests'}
         path = os.path.abspath(__file__)
         main_dir = path.rfind('/gendiff')
         files_dir = paths.get(file_type1)
@@ -64,7 +64,7 @@ def prepare_data(file_path1, file_path2):
     return first_file, second_file
 
 
-def get_data(file_path1: str, file_path2: str):
+def convert_data_to_dict(file_path1: str, file_path2: str):
     first_file = second_file = 0
     dict_predicate = is_dict(file_path1)
     if not dict_predicate:
@@ -72,3 +72,17 @@ def get_data(file_path1: str, file_path2: str):
     elif dict_predicate:
         first_file, second_file = file_path1, file_path2
     return first_file, second_file
+
+
+def json_loader(array):
+    output = []
+    for jsn in array:
+        output.append(json.loads(jsn))
+    return output
+
+
+def yaml_loader(array):
+    output = []
+    for yml in array:
+        output.append(yaml.load(yml, yaml.Loader))
+    return output
