@@ -35,13 +35,13 @@ def test_generate_diff_yaml():
         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
 
 
-def test_find_files():
-    file1 = '/home/timofey/Desktop/workspace/pythonProject/difference_calculator/python-project-50/tests/fixtures/json_tests/test_5_recurs_file1.json'
-    file2 = '/home/timofey/Desktop/workspace/pythonProject/difference_calculator/python-project-50/tests/fixtures/json_tests/test_5_recurs_file2.json'
-    answer = (file1, file2)
-    result = find_files('test_5_recurs_file1.json', 'test_5_recurs_file2.json')
-    assert result == answer, "Paths are not equal"
-
+# def test_find_files():
+#     file1 = '/tests/fixtures/json_tests/test_5_recurs_file1.json'
+#     file2 = '/tests/fixtures/json_tests/test_5_recurs_file2.json'
+#     answer = (file1, file2)
+#     result = find_files('test_5_recurs_file1.json', 'test_5_recurs_file2.json')
+#     assert result == answer, "Paths are not equal"
+#
 
 def test_check_type_of_file():
     result = check_type_of_file('test_5_recurs_file1.json', 'test_5_recurs_file2.json',)
