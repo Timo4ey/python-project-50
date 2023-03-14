@@ -1,8 +1,12 @@
 import itertools
 
 from gendiff.prepare_data.prepare_data import serialize_output
-from gendiff.scripts.checkers.checkers import is_dicts_equals, is_both_dicts_not_equal, is_only_first_value_dict, \
-    is_only_second_value_dict, is_first_dict_second_value, check_values_forms
+from gendiff.scripts.checkers.checkers import (is_dicts_equals,
+                                               is_both_dicts_not_equal,
+                                               is_only_first_value_dict,
+                                               is_only_second_value_dict,
+                                               is_first_dict_second_value,
+                                               check_values_forms)
 from gendiff.scripts.formartter.formartter import convert_to_format
 from gendiff.scripts.get_unique_keys.unique_keys import getting_unique_keys
 
@@ -32,7 +36,8 @@ def compare_two_values(space_feeler: str, key, value_1, value_2) -> list[str]:
     return []
 
 
-def compare_two_dicts(space_feeler:  str, key, value_1: dict, value_2: dict, depth=0):
+def compare_two_dicts(space_feeler: str, key,
+                      value_1: dict, value_2: dict, depth=0):
     next_depth = 3
     next_depth = depth + next_depth
     # 1
@@ -55,7 +60,7 @@ def compare_two_dicts(space_feeler:  str, key, value_1: dict, value_2: dict, dep
     if is_first_dict_second_value(value_1, value_2):
         return [*convert_to_format(space_feeler, '-', key, stringify(
             array=value_1, space_count=next_depth)),
-                *convert_to_format(space_feeler, '+', key, value_2)]
+            *convert_to_format(space_feeler, '+', key, value_2)]
     return []
 
 
