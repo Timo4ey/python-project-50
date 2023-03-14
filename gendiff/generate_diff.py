@@ -2,7 +2,7 @@ import itertools
 
 from gendiff.prepare_data.prepare_data import (prepare_data, serialize_output)
 from gendiff.scripts.checkers.checkers import check_values_forms
-from gendiff.scripts.compare_data.compare_data import compare_engine, compare_two_values
+from gendiff.scripts.compare_data.compare_data import compare_two_values
 
 
 def dif(first_dict: dict, second_dict: dict, depth=0, replacer=' ') -> str:
