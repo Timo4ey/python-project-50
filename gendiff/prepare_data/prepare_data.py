@@ -3,6 +3,8 @@ import os
 import yaml
 from yaml import Loader
 
+from gendiff.scripts.checkers.checkers import is_same_type, is_dict
+
 
 def find_files(file1, file2):
     file_type1, file_type2 = check_type_of_file(file1, file2)
@@ -10,12 +12,13 @@ def find_files(file1, file2):
     file_type2 = file_type2 if file_type2 in ('json', 'yml') else 'yml'
     if file_type1 == file_type2:
         paths = {
-            "json": './tests/fixtures/json_tests/',
-            "yml": './tests/fixtures/yml_tests/'}
-        path1 = os.path.abspath(paths.get(file_type1))
-        directory = list(os.walk(path1))[0][2]
-        if file1 in directory and file2 in directory:
-            return f'{path1}/{file1}', f'{path1}/{file2}'
+            "json": '/tests/fixtures/json_tests/',
+            "yml": '/tests/fixtures/yml_tests/'}
+        path = os.path.abspath(__file__)
+        main_dir = path.rfind('/gendiff')
+        files_dir = paths.get(file_type1)
+        path = path[:main_dir] + files_dir if main_dir != -1 else path
+        return f'{path}/{file1}', f'{path}/{file2}'
 
 
 def check_type_of_file(file_path1, file_path2):
@@ -34,12 +37,6 @@ def download_two_yml_files(file_path1: yaml, file_path2: yaml):
     first_file = yaml.load(open(file_path1), Loader=Loader)
     second_file = yaml.load(open(file_path2), Loader=Loader)
     return first_file, second_file
-
-
-def is_same_type(file1, file2):
-    if file1 == file2:
-        return True
-    raise TypeError("Files must be the same type")
 
 
 def handle_load_files(file_path1):
@@ -61,19 +58,17 @@ def prepare_data(file_path1, file_path2):
     first_type, second_type = check_type_of_file(file_path1, file_path2)
     is_same_type(first_type, second_type)
     func = handle_load_files(first_type)
-    js_path = "../tests/fixtures/json_tests/"
-    first_file, second_file = func(js_path + file_path1, js_path + file_path2)
+    first_path, second_path = find_files(file_path1, file_path2)
+    first_file, second_file = func(first_path, second_path)
 
     return first_file, second_file
 
 
-def get_unique_keys(first_item, second_item):
-    if isinstance(first_item, dict) and isinstance(second_item, dict):
-        value = list({*first_item.keys(), *second_item.keys()})
-    elif isinstance(first_item, dict) and not isinstance(second_item, dict):
-        value = list({*first_item.keys(), second_item})
-    elif isinstance(second_item, dict) and not isinstance(first_item, dict):
-        value = list({*second_item.keys(), first_item})
-    else:
-        value = list({second_item, first_item})
-    return value
+def get_data(file_path1: str, file_path2: str):
+    first_file = second_file = 0
+    dict_predicate = is_dict(file_path1)
+    if not dict_predicate:
+        first_file, second_file = prepare_data(file_path1, file_path2)
+    elif dict_predicate:
+        first_file, second_file = file_path1, file_path2
+    return first_file, second_file
