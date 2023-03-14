@@ -4,9 +4,11 @@ from gendiff.prepare_data.prepare_data import json_loader, yaml_loader, find_fil
     download_two_json_files, download_two_yml_files, handle_load_files, serialize_output
 import os
 
+from gendiff.scripts.stylish.stylish import stylish
 
 simple_dict = ({'follow': False, 'host': 'hexlet.io', 'proxy': '123.234.53.22', 'timeout': 50},
                {'host': 'hexlet.io', 'timeout': 20, 'verbose': True})
+
 
 def fixture_path(file_path):
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +35,23 @@ def test_generate_diff_yaml():
     answers = files_loader('answers.txt')
     for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
+
+
+def test_stylish_json():
+    file1, file2 = prepare_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
+    result = stylish(file1, file2)
+    with open('tests/fixtures/json_tests/test_5_recurs.txt', 'r') as f:
+        answer = f.read()
+    assert result == answer
+
+
+
+def test_stylish_yml():
+    file1, file2 = prepare_data("test_5_yaml_file1.yml", "test_5_yaml_file2.yml")
+    result = stylish(file1, file2)
+    with open('tests/fixtures/json_tests/test_5_recurs.txt', 'r') as f:
+        answer = f.read()
+    assert result == answer
 
 
 # def test_find_files():
