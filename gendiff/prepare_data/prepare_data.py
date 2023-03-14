@@ -8,20 +8,22 @@ from gendiff.scripts.checkers.checkers import is_same_type, is_dict
 
 def find_files(file1, file2):
     file_type1, file_type2 = check_type_of_file(file1, file2)
+    lines = file1.count('/')
     paths = {
         "json": '/tests/fixtures/json_tests',
         "yml": '/tests/fixtures/yml_tests'}
     files_dir = paths.get(file_type1)
     path = os.path.dirname(os.path.realpath(__file__))
-    if '.venv' not in path:
+    if '.venv' not in path and lines < 2:
         main_dir = path.rfind('/gendiff')
 
         path = path[:main_dir] + files_dir if main_dir != -1 else path
         return f'{path}/{file1}', f'{path}/{file2}'
-    elif '.venv' in path:
+    elif '.venv' in path and lines < 2:
         home_dir = path[:path.rfind('.venv')]
         return f'{home_dir}{files_dir}/{file1}',\
             f'{home_dir}{files_dir}/{file2}'
+    return file1, file2
 
 
 def check_type_of_file(file_path1, file_path2):
