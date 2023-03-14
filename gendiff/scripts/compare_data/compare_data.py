@@ -12,56 +12,57 @@ from gendiff.scripts.get_unique_keys.unique_keys import getting_unique_keys
 
 
 def compare_two_values(space_feeler: str, key, value_1, value_2) -> list[str]:
+    output = []
     if dict not in (type(value_1), type(value_2)):
         if value_1 == value_2 \
                 and type(value_1) not in (dict, type):
-
-            return convert_to_format(space_feeler, ' ', key, value_1)
+            output = convert_to_format(space_feeler, ' ', key, value_1)
 
         elif value_1 != value_2 and \
                 type(value_1) is not type and \
                 type(value_2) is not type:
-            return [*convert_to_format(space_feeler, '-', key, value_1),
-                    *convert_to_format(space_feeler, '+', key, value_2)]
+            output = [*convert_to_format(space_feeler, '-', key, value_1),
+                      *convert_to_format(space_feeler, '+', key, value_2)]
 
         elif value_1 != value_2 and \
                 type(value_1) is not type and \
                 type(value_2) is type:
-            return convert_to_format(space_feeler, '-', key, value_1)
+            output = convert_to_format(space_feeler, '-', key, value_1)
 
         elif value_1 != value_2 and \
                 type(value_1) is type and \
                 type(value_2) is not type:
-            return convert_to_format(space_feeler, '+', key, value_2)
-    return []
+            output = convert_to_format(space_feeler, '+', key, value_2)
+    return output
 
 
 def compare_two_dicts(space_feeler: str, key,
                       value_1: dict, value_2: dict, depth=0):
     next_depth = 3
     next_depth = depth + next_depth
+    output = []
     # 1
     if is_dicts_equals(key, value_1, value_2):
-        return convert_to_format(space_feeler, ' ', key, compare_engine(
+        output = convert_to_format(space_feeler, ' ', key, compare_engine(
             value_1, value_2, depth=next_depth))
     # 2
-    if is_both_dicts_not_equal(value_1, value_2):
-        return convert_to_format(space_feeler, ' ', key, compare_engine(
+    elif is_both_dicts_not_equal(value_1, value_2):
+        output = convert_to_format(space_feeler, ' ', key, compare_engine(
             value_1, value_2, depth=next_depth))
     # 3
-    if is_only_first_value_dict(value_1, value_2):
-        return convert_to_format(space_feeler, '-', key, stringify(
+    elif is_only_first_value_dict(value_1, value_2):
+        output = convert_to_format(space_feeler, '-', key, stringify(
             array=value_1, space_count=next_depth))
     # 4
-    if is_only_second_value_dict(value_1, value_2):
-        return convert_to_format(space_feeler, '+', key, stringify(
+    elif is_only_second_value_dict(value_1, value_2):
+        output = convert_to_format(space_feeler, '+', key, stringify(
             array=value_2, space_count=next_depth))
     # 5
-    if is_first_dict_second_value(value_1, value_2):
-        return [*convert_to_format(space_feeler, '-', key, stringify(
+    elif is_first_dict_second_value(value_1, value_2):
+        output = [*convert_to_format(space_feeler, '-', key, stringify(
             array=value_1, space_count=next_depth)),
             *convert_to_format(space_feeler, '+', key, value_2)]
-    return []
+    return output
 
 
 def resizer(deep_size: int, replacer: str, max_depth: int) -> str:
