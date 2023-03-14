@@ -1,8 +1,8 @@
 import itertools
 
-from gendiff.generate_diff import dif
+from gendiff.prepare_data.prepare_data import serialize_output
 from gendiff.scripts.checkers.checkers import is_dicts_equals, is_both_dicts_not_equal, is_only_first_value_dict, \
-    is_only_second_value_dict, is_first_dict_second_value
+    is_only_second_value_dict, is_first_dict_second_value, check_values_forms
 from gendiff.scripts.formartter.formartter import convert_to_format
 from gendiff.scripts.get_unique_keys.unique_keys import getting_unique_keys
 
@@ -37,11 +37,11 @@ def compare_two_dicts(space_feeler:  str, key, value_1: dict, value_2: dict, dep
     next_depth = depth + next_depth
     # 1
     if is_dicts_equals(key, value_1, value_2):
-        return convert_to_format(space_feeler, ' ', key, dif(
+        return convert_to_format(space_feeler, ' ', key, compare_engine(
             value_1, value_2, depth=next_depth))
     # 2
     if is_both_dicts_not_equal(value_1, value_2):
-        return convert_to_format(space_feeler, ' ', key, dif(
+        return convert_to_format(space_feeler, ' ', key, compare_engine(
             value_1, value_2, depth=next_depth))
     # 3
     if is_only_first_value_dict(value_1, value_2):
@@ -81,3 +81,22 @@ def stringify(array: dict, replacer=" ", space_count=1, max_depth=8) -> str:
         result = itertools.chain("{", output, [current_feeler + "}"])
         return '\n'.join(result)
     return inner(array)
+
+
+def compare_engine(first_dict: dict, second_dict: dict, depth=0, replacer=' '):
+    output = []
+
+    deep_size = depth + 1
+    space_feeler = deep_size * replacer
+    current_feeler = replacer * depth
+
+    set_of_unique_keys = check_values_forms(first_dict, second_dict)
+    for k in set_of_unique_keys:
+        key, key2 = first_dict.get(k, type), second_dict.get(k, type)
+
+        output.extend(compare_two_values(space_feeler, k, key, key2))
+        output.extend(compare_two_dicts(space_feeler, k, key, key2,
+                                        depth=deep_size))
+
+    outcome = itertools.chain("{", output, [current_feeler + "}"])
+    return serialize_output('\n'.join(outcome))
