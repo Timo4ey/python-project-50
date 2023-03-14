@@ -142,7 +142,7 @@ def compare_two_dicts(space_feeler, key, value_1, value_2, depth=0):
     return []
 
 
-def resizer(deep_size, replacer, max_depth):
+def resizer(deep_size: int, replacer: str, max_depth: int) -> str:
     if deep_size < max_depth:
         return deep_size * replacer
     else:
@@ -192,5 +192,8 @@ def generate_diff(dictionary_1: dict, dictionary_2: dict) -> str:
 if __name__ == '__main__':
     data = get_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
     file1, file2 = data
-    result = generate_diff(file1, file2)
-    print(result)
+    out = generate_diff(file1, file2)
+    with open("../tests/fixtures/json_tests/test_5_recurs.txt", 'r') as f:
+        answer = f.read()
+        print(answer == out)
+    print(out)
