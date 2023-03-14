@@ -1,5 +1,4 @@
 import itertools
-
 from gendiff.prepare_data.prepare_data import (prepare_data, serialize_output)
 from gendiff.scripts.checkers.checkers import check_values_forms
 from gendiff.scripts.compare_data.compare_data import compare_two_values
@@ -32,5 +31,4 @@ if __name__ == '__main__':
     out = generate_diff(file1, file2)
     with open("../tests/fixtures/json_tests/test1_plain_json.txt", 'r') as f:
         answer = f.read()
-        print(answer == out)
     print(out)

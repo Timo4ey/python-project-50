@@ -8,17 +8,20 @@ from gendiff.scripts.checkers.checkers import is_same_type, is_dict
 
 def find_files(file1, file2):
     file_type1, file_type2 = check_type_of_file(file1, file2)
-    file_type1 = file_type1 if file_type1 in ('json', 'yml') else 'yml'
-    file_type2 = file_type2 if file_type2 in ('json', 'yml') else 'yml'
-    if file_type1 == file_type2:
-        paths = {
-            "json": '/tests/fixtures/json_tests',
-            "yml": '/tests/fixtures/yml_tests'}
-        path = os.path.abspath(__file__)
+    paths = {
+        "json": '/tests/fixtures/json_tests',
+        "yml": '/tests/fixtures/yml_tests'}
+    files_dir = paths.get(file_type1)
+    path = os.path.dirname(os.path.realpath(__file__))
+    if '.venv' not in path:
         main_dir = path.rfind('/gendiff')
-        files_dir = paths.get(file_type1)
+
         path = path[:main_dir] + files_dir if main_dir != -1 else path
         return f'{path}/{file1}', f'{path}/{file2}'
+    elif '.venv' in path:
+        home_dir = path[:path.rfind('.venv')]
+        return f'{home_dir}{files_dir}/{file1}',\
+            f'{home_dir}{files_dir}/{file2}'
 
 
 def check_type_of_file(file_path1, file_path2):
