@@ -1,5 +1,6 @@
 import argparse
 from gendiff.prepare_data.prepare_data import prepare_data
+from gendiff.scripts.json_format.json_format import json_format
 from gendiff.scripts.plain.plain import plain
 from gendiff.scripts.stylish.stylish import stylish
 
@@ -19,12 +20,14 @@ def command():
 
 
 def main():
+    methods = {
+        "stylish": stylish,
+        "plain": plain,
+        "json": json_format
+    }
     file1, file2, style = command()
     first_data, second_data = prepare_data(file1, file2)
-    if style == "stylish":
-        output = stylish(first_data, second_data)
-    else:
-        output = plain(first_data, second_data)
+    output = methods.get(style)(first_data, second_data)
     print(output)
 
 
