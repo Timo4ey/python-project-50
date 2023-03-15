@@ -3,7 +3,7 @@ from gendiff.scripts.get_unique_keys.unique_keys import getting_unique_keys
 
 def is_dicts_equals(key, value_1, value_2) -> bool:
     if dict in (type(value_1), type(value_2)):
-        if value_1 == value_2 and type(key) is dict \
+        if value_1 == value_2 and type(value_1) is dict \
                 and type(value_2) is dict:
             return True
         return False
@@ -65,3 +65,24 @@ def check_values_forms(first_values, second_values):
         set_of_unique_keys = getting_unique_keys(second_values)
         first_values = {}
     return set_of_unique_keys
+
+
+def is_first_value_type(first_value, second_value):
+    if first_value is type and second_value is not type:
+        return True
+    return False
+
+
+def is_first_value_not_type(first_value, second_value):
+    if first_value is not type and second_value is type:
+        return True
+    return False
+
+
+def is_both_not_type(first_value, second_value):
+    if type(first_value) is dict and type(second_value) is not dict:
+        return True
+    elif dict not in (type(first_value), type(second_value)) and \
+            first_value != second_value:
+        return True
+    return False

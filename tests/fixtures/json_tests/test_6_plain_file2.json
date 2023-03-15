@@ -1,0 +1,22 @@
+{
+  "name" : "Gustavo",
+  "city" : "Palermo",
+  "habits": {
+    "good": "sports",
+    "sports": {
+      "types": {
+        "summer": "surf"
+      }
+    },
+    "neutral": "eating fastfood"
+  },
+  "children": {
+    "son1": "Gustave Junior",
+    "son2": "Gustave Junior Junior",
+    "daughters": {
+            "daughter1": "Alpaka",
+            "daughter2": "Femida"
+    }
+  },
+  "married": true
+}

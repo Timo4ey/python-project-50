@@ -1,0 +1,14 @@
+{
+  "name" : "Gustavo",
+  "city" : "Los Angeles",
+  "habits": {
+    "good": "sports",
+    "bad": "drinking",
+    "sports": {
+      "types": {
+        "winter": "ski"
+      }
+    }
+  },
+  "married": false
+}

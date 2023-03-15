@@ -1,0 +1,7 @@
+Property 'children' was added with value: [complex value]
+Property 'city' was updated. From 'Los Angeles' to 'Palermo'
+Property 'habits.bad' was removed
+Property 'habits.neutral' was added with value: 'eating fastfood'
+Property 'habits.sports.types.summer' was added with value: 'surf'
+Property 'habits.sports.types.winter' was removed
+Property 'married' was updated. From false to true
