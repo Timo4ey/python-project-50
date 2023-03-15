@@ -1,4 +1,12 @@
 # Difference Calculator
+installation:
+1. Clone this repo
+2. Open console in directory with the clone repo
+3. If poetry doesn't installed `pip install poetry`
+<br>3.1. Run `poetry install` 
+4. Create a build `make build`
+5. Public code `make public`
+6. Install `make package-install`
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Timo4ey/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Timo4ey/python-project-50/actions)
@@ -26,3 +34,6 @@ Command: ```gendiff test_1_yaml_file1.yml test_1_yaml_file2.yml```
 
 [![asciicast](https://asciinema.org/a/mGk9IRM5wxHK12oVPMKt3jZTv.svg)](https://asciinema.org/a/mGk9IRM5wxHK12oVPMKt3jZTv)
 
+### Plain files Comparison
+Command: ```gendiff --format plain test_5_recurs_file1.json test_5_recurs_file2.json```
+[![asciicast](https://asciinema.org/a/mqLIHmT6dhRGDIYrqKGIig4zh.svg)](https://asciinema.org/a/mqLIHmT6dhRGDIYrqKGIig4zh)
