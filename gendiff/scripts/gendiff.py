@@ -1,6 +1,6 @@
 import argparse
 
-from gendiff.generate_diff import dif
+from gendiff.gen_diff_simple import dif
 from gendiff.prepare_data.prepare_data import prepare_data
 from gendiff.scripts.json_format.json_format import json_format
 from gendiff.scripts.plain.plain import plain
