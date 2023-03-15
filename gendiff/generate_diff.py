@@ -1,5 +1,5 @@
 import itertools
-from gendiff.prepare_data.prepare_data import (prepare_data, serialize_output)
+from gendiff.prepare_data.prepare_data import serialize_output
 from gendiff.scripts.checkers.checkers import check_values_forms
 from gendiff.scripts.compare_data.compare_data import compare_two_values
 
@@ -18,6 +18,3 @@ def dif(first_dict: dict, second_dict: dict, depth=0, replacer=' ') -> str:
         output.extend(compare_two_values(space_filler, k, key, key2))
     outcome = itertools.chain("{", output, [current_feeler + "}"])
     return serialize_output('\n'.join(outcome))
-
-
-
