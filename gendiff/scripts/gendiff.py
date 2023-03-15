@@ -1,5 +1,4 @@
 import argparse
-from gendiff.generate_diff import generate_diff
 from gendiff.prepare_data.prepare_data import prepare_data
 from gendiff.scripts.plain.plain import plain
 from gendiff.scripts.stylish.stylish import stylish
