@@ -31,19 +31,19 @@ def files_loader(path):
 
 def test_generate_diff_json():
 
-    jsn_files = json_loader(files_loader(files_reader('tests/fixtures/answers/jsons.txt')))[:2]
+    jsn_files = json_loader(files_loader(files_reader('tests/fixtures/answers/jsons.txt')))
     print("jsn_files!!!!",jsn_files)
-    answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))[:1]
+    answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))
     # print("answers!!!", answers)
     for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
 
 
-# def test_generate_diff_yaml():
-#     jsn_files = yaml_loader(files_loader(files_reader('tests/fixtures/answers/yamls.txt')))
-#     answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))
-#     for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
-#         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
+def test_generate_diff_yaml():
+    jsn_files = yaml_loader(files_loader(files_reader('tests/fixtures/answers/yamls.txt')))
+    answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))
+    for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
+        assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
 
 
 def test_stylish_json():

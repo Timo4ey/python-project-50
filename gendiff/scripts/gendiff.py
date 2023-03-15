@@ -29,7 +29,6 @@ def main():
     file1, file2, style = command()
     first_data, second_data = prepare_data(file1, file2)
     method = methods.get(style)
-    print(method.__name__)
     output = method(first_data, second_data)
     print(output)
 
