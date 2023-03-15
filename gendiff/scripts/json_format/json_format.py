@@ -5,20 +5,19 @@ from gendiff.scripts.checkers.checkers import \
 import json
 
 
-def add_values(data: dict, output: dict) -> dict:
-    if data.get('added'):
-        output['added'].update(data.get('added'))
+def add_values(response, output):
+    if response.get('added'):
+        output['added'].update(response.get('added'))
 
-    elif data.get('removed'):
-        output['removed'].update(data.get('removed'))
+    elif response.get('removed'):
+        output['removed'].update(response.get('removed'))
 
-    elif data.get('updated'):
-        output['updated'].update(data.get('updated'))
-
+    elif response.get('updated'):
+        output['updated'].update(response.get('updated'))
     return output
 
 
-def json_format(first_value: dict, second_value: dict, key='') -> json.dumps:
+def format_to_json(first_value, second_value, key=''):
     output = {'added': {},
               'removed': {},
               'updated': {}}
@@ -41,13 +40,19 @@ def json_format(first_value: dict, second_value: dict, key='') -> json.dumps:
         value_1 = first_value.get(keyword, type)
         value_2 = second_value.get(keyword, type)
 
-        response = json_format(value_1, value_2, keyword)
-        output = add_values(response, output)
+        response = format_to_json(value_1, value_2, keyword)
+        output.update(add_values(response, output))
 
-    return json.dumps(output, indent=2)
+    return output
+
+
+def json_format(first_dict, second_dict):
+    response = format_to_json(first_dict, second_dict)
+    return json.dumps(response, indent=2)
 
 
 if __name__ == "__main__":
-    file1, file2 = prepare_data("test_1_file1.json", "test_1_file2.json")
+    file1, file2 = prepare_data("test_5_recurs_file1.json",
+                                "test_5_recurs_file2.json")
     resp = json_format(file1, file2)
     print(resp)
