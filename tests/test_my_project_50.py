@@ -6,7 +6,7 @@ import os
 from gendiff.scripts.gendiff import generate_diff
 from gendiff.scripts.json_format.json_format import json_format
 from gendiff.scripts.plain.plain import plain
-from gendiff.scripts.stylish.stylish import stylish
+from gendiff.scripts.stylish import stylish
 
 simple_dict = ({'follow': False, 'host': 'hexlet.io', 'proxy': '123.234.53.22', 'timeout': 50},
                {'host': 'hexlet.io', 'timeout': 20, 'verbose': True})
