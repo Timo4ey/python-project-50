@@ -60,13 +60,15 @@ def serialize_output(string: str) -> str:
 
 
 def prepare_data(file_path1, file_path2):
-    first_type, second_type = check_type_of_file(file_path1, file_path2)
-    is_same_type(first_type, second_type)
-    func = handle_load_files(first_type)
-    first_path, second_path = find_files(file_path1, file_path2)
-    first_file, second_file = func(first_path, second_path)
+    if not isinstance(file_path1, dict) and not isinstance(file_path1, dict):
+        first_type, second_type = check_type_of_file(file_path1, file_path2)
+        is_same_type(first_type, second_type)
+        func = handle_load_files(first_type)
+        first_path, second_path = find_files(file_path1, file_path2)
+        first_file, second_file = func(first_path, second_path)
 
-    return first_file, second_file
+        return first_file, second_file
+    return file_path1, file_path2
 
 
 def convert_data_to_dict(file_path1: str, file_path2: str):

@@ -34,5 +34,10 @@ def main():
     print(output)
 
 
+def generate_diff(dictionary_1: dict, dictionary_2: dict) -> str:
+    file1, file2 = prepare_data(dictionary_1, dictionary_2)
+    return stylish(file1, file2).strip('\n')
+
+
 if __name__ == '__main__':
     main()
