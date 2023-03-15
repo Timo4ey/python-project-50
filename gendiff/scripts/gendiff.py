@@ -1,4 +1,6 @@
 import argparse
+
+from gendiff.generate_diff import dif
 from gendiff.prepare_data.prepare_data import prepare_data
 from gendiff.scripts.json_format.json_format import json_format
 from gendiff.scripts.plain.plain import plain
@@ -18,6 +20,9 @@ def command():
     args = parser.parse_args()
     return args.first_file, args.second_file, args.format
 
+
+def generate_diff(dictionary_1: dict, dictionary_2: dict) -> str:
+    return dif(dictionary_1, dictionary_2).strip('\n')
 
 def main():
     methods = {
