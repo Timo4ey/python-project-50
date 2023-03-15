@@ -37,3 +37,9 @@ Command: ```gendiff test_1_yaml_file1.yml test_1_yaml_file2.yml```
 ### Plain files Comparison
 Command: ```gendiff --format plain test_5_recurs_file1.json test_5_recurs_file2.json```
 [![asciicast](https://asciinema.org/a/mqLIHmT6dhRGDIYrqKGIig4zh.svg)](https://asciinema.org/a/mqLIHmT6dhRGDIYrqKGIig4zh)
+
+### Files Comparasion in style JSON
+Command: ```gendiff --format json test_5_recurs_file1.json test_5_recurs_file2.json```
+[![asciicast](https://asciinema.org/a/W0xl3nUCIGhGWhsc4D0wFuixH.svg)](https://asciinema.org/a/W0xl3nUCIGhGWhsc4D0wFuixH)
+
+
