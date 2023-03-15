@@ -1,6 +1,7 @@
 import argparse
 from gendiff.generate_diff import generate_diff
 from gendiff.prepare_data.prepare_data import prepare_data
+from gendiff.scripts.plain.plain import plain
 from gendiff.scripts.stylish.stylish import stylish
 
 
@@ -24,7 +25,7 @@ def main():
     if style == "stylish":
         output = stylish(first_data, second_data)
     else:
-        output = generate_diff(first_data, second_data)
+        output = plain(first_data, second_data)
     print(output)
 
 
