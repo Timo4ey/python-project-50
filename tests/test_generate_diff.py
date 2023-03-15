@@ -4,6 +4,7 @@ from gendiff.prepare_data.prepare_data import json_loader, yaml_loader, find_fil
     download_two_json_files, download_two_yml_files, handle_load_files, serialize_output
 import os
 
+from gendiff.scripts.plain.plain import plain
 from gendiff.scripts.stylish.stylish import stylish
 
 simple_dict = ({'follow': False, 'host': 'hexlet.io', 'proxy': '123.234.53.22', 'timeout': 50},
@@ -16,23 +17,28 @@ def fixture_path(file_path):
     return path_to_file
 
 
+def files_reader(path):
+    with open(path, 'r') as f:
+        response = f.read()
+    return response
+
+
 def files_loader(path):
-    the_file = fixture_path(path)
-    files = open(the_file, 'r')
-    list_if_files = files.read().rstrip().split('\n\n\n\n')
+    list_if_files = path.rstrip().split('\n\n\n\n')
     return list_if_files
 
 
 def test_generate_diff_json():
-    jsn_files = json_loader(files_loader('jsons.txt'))
-    answers = files_loader('answers.txt')
+
+    jsn_files = json_loader(files_loader(files_reader('tests/fixtures/answers/jsons.txt')))
+    answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))
     for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
 
 
 def test_generate_diff_yaml():
-    jsn_files = yaml_loader(files_loader('yamls.txt'))
-    answers = files_loader('answers.txt')
+    jsn_files = yaml_loader(files_loader(files_reader('tests/fixtures/answers/yamls.txt')))
+    answers = files_loader(files_reader('tests/fixtures/answers/answers.txt'))
     for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
         assert generate_diff(jsn_files[i], jsn_files[i + 1]) == v
 
@@ -40,27 +46,30 @@ def test_generate_diff_yaml():
 def test_stylish_json():
     file1, file2 = prepare_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
     result = stylish(file1, file2)
-    with open('tests/fixtures/json_tests/test_5_recurs.txt', 'r') as f:
-        answer = f.read()
+    answer = files_reader('tests/fixtures/answers/test_5_recurs.txt')
     assert result == answer
-
 
 
 def test_stylish_yml():
     file1, file2 = prepare_data("test_5_yaml_file1.yml", "test_5_yaml_file2.yml")
     result = stylish(file1, file2)
-    with open('tests/fixtures/json_tests/test_5_recurs.txt', 'r') as f:
-        answer = f.read()
+    answer = files_reader('tests/fixtures/answers/test_5_recurs.txt')
     assert result == answer
 
 
-# def test_find_files():
-#     file1 = '/tests/fixtures/json_tests/test_5_recurs_file1.json'
-#     file2 = '/tests/fixtures/json_tests/test_5_recurs_file2.json'
-#     answer = (file1, file2)
-#     result = find_files('test_5_recurs_file1.json', 'test_5_recurs_file2.json')
-#     assert result == answer, "Paths are not equal"
-#
+def test_plain_json_recurse():
+    file1, file2 = prepare_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
+    result = plain(file1, file2)
+    answer = files_reader('tests/fixtures/answers/plain_flat_test1.txt')
+    assert result == answer
+
+
+def test_plain_flat_files():
+    jsn_files = yaml_loader(files_loader(files_reader('tests/fixtures/answers/answers_flat.txt')))
+    answers = files_loader(files_reader('tests/fixtures/answers/answer_plain_test1.txt'))
+    for i, v in zip(range(0, len(jsn_files) - 1, 2), answers):
+        assert plain(jsn_files[i], jsn_files[i + 1]) == v
+
 
 def test_check_type_of_file():
     result = check_type_of_file('test_5_recurs_file1.json', 'test_5_recurs_file2.json',)

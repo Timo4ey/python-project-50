@@ -29,6 +29,6 @@ if __name__ == '__main__':
     data = prepare_data("test_1_file1.json", "test_1_file2.json")
     file1, file2 = data
     out = generate_diff(file1, file2)
-    with open("../tests/fixtures/json_tests/test1_plain_json.txt", 'r') as f:
+    with open("../tests/fixtures/answers/test1_json.txt", 'r') as f:
         answer = f.read()
     print(out)
