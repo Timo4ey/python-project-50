@@ -4,6 +4,7 @@ from gendiff.prepare_data.prepare_data import json_loader, yaml_loader, find_fil
     download_two_json_files, download_two_yml_files, handle_load_files, serialize_output
 import os
 
+from gendiff.scripts.json_format.json_format import json_format
 from gendiff.scripts.plain.plain import plain
 from gendiff.scripts.stylish.stylish import stylish
 
@@ -123,3 +124,13 @@ def test_prepare_data():
     result = prepare_data('test_1_file1.json', 'test_1_file2.json')
     answer = simple_dict
     assert result == answer
+
+
+def test_json_format():
+    import json
+    file1, file2 = prepare_data("test_1_file1.json", "test_1_file2.json")
+    result = json_format(file1, file2)
+    with open("tests/fixtures/answers/jsnon_test1_answer.json", 'r') as f:
+        answer = json.dumps(json.loads(f.read()), indent=2)
+    assert result == answer
+
