@@ -1,4 +1,4 @@
-from gendiff.gendiff import generate_diff
+from gendiff.generate_diff import generate_diff
 from gendiff.prepare_data.prepare_data import prepare_data
 from gendiff.prepare_data.prepare_data import json_loader, yaml_loader, find_files, check_type_of_file, \
     download_two_json_files, download_two_yml_files, handle_load_files, serialize_output
