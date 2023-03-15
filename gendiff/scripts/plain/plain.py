@@ -1,4 +1,3 @@
-from gendiff.prepare_data.prepare_data import prepare_data
 from gendiff.scripts.checkers.checkers import (check_values_forms,
                                                is_first_value_type,
                                                is_first_value_not_type,
