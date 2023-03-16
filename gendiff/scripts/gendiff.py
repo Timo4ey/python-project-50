@@ -31,14 +31,17 @@ def main():
     method = methods.get(style)
 
     output = method(first_data, second_data)
-    with open("temp_recurs2.txt", 'w') as f:
-        f.write(output)
-    print(output)
 
 
-def generate_diff(dictionary_1: dict, dictionary_2: dict) -> str:
+def generate_diff(dictionary_1: dict, dictionary_2: dict, handler='stylish') -> str:
+    methods = {
+        "stylish": stylish,
+        "plain": plain,
+        "json": json_format
+    }
+    method = methods.get(handler)
     file1, file2 = prepare_data(dictionary_1, dictionary_2)
-    return stylish(file1, file2).strip('\n')
+    return method(file1, file2)
 
 
 if __name__ == '__main__':

@@ -7,3 +7,5 @@ tests/temp_file.py
 temp_file.py
 unuse_scripts
 temp_recurs.txt
+temp_recurs2.txt
+tests/tests_2/
