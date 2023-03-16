@@ -29,11 +29,12 @@ def main():
     file1, file2, style = command()
     first_data, second_data = prepare_data(file1, file2)
     method = methods.get(style)
-
     output = method(first_data, second_data)
+    print(output)
 
 
-def generate_diff(dictionary_1: dict, dictionary_2: dict, handler='stylish') -> str:
+def generate_diff(dictionary_1: dict, dictionary_2: dict,
+                  handler='stylish') -> str:
     methods = {
         "stylish": stylish,
         "plain": plain,
