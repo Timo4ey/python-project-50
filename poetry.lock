@@ -250,6 +250,24 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
 
 [[package]]
+name = "pytest-pretty-terminal"
+version = "1.1.0"
+description = "pytest plugin for generating prettier terminal output"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-pretty-terminal-1.1.0.tar.gz", hash = "sha256:3a284bfaee4dac65524762436bbd875d70ca2dd1384170ef212887f860068f8f"},
+    {file = "pytest_pretty_terminal-1.1.0-py3-none-any.whl", hash = "sha256:fe40d237383efe2d023f2b4faea9784da7f81c8b54987261ec5bb11966b98e77"},
+]
+
+[package.dependencies]
+pytest = ">=3.4.1"
+
+[package.extras]
+test = ["pytest-adaptavist (>=5.1.1)"]
+
+[[package]]
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
@@ -314,4 +332,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10"
-content-hash = "c1ff14444586568646040d3ba60dc4407a554b76b40a50d71595f199f924e1a1"
+content-hash = "6261c2100436b6cd3c1fbadd6799b87caf95316a166fffaf2ce2af43dc90f3e3"

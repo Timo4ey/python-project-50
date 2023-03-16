@@ -29,6 +29,13 @@ def files_loader(path):
     return list_if_files
 
 
+# def test_plain_2():
+#     path1 = "tests/tests_2/fixtures/file1.json"
+#     path2 = "tests/tests_2/fixtures/file2.json"
+#     file1, file2 = prepare_data(path1, path2)
+#     result = generate_diff(file1, file2, 'plain')
+#     answer = files_loader(files_reader("tests/tests_2/fixtures/result_plain"))
+#     assert result == answer
 # def test_stylish_2():
 #     path1 = "tests/tests_2/fixtures/file1.json"
 #     path2 = "tests/tests_2/fixtures/file2.json"

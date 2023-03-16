@@ -19,6 +19,8 @@ def change_format(string):
     value = values.get(string, type)
     if type(string) is str:
         output = f"'{string}'"
+    elif type(string) in (float, int):
+        output = string
     elif value is not type:
         output = value
     return output

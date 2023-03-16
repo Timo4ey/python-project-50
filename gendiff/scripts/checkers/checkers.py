@@ -89,9 +89,18 @@ def is_first_value_not_type(first_value, second_value):
 
 
 def is_both_not_type(first_value, second_value):
-    if type(first_value) is dict and type(second_value) is not dict:
+    if is_first_not_dict_second_dict(first_value, second_value):
+        return True
+    elif type(first_value) is dict and type(second_value) is not dict:
         return True
     elif dict not in (type(first_value), type(second_value)) and \
             first_value != second_value:
+        return True
+
+    return False
+
+
+def is_first_not_dict_second_dict(first_value, second_value):
+    if type(first_value) is not dict and type(second_value) is dict:
         return True
     return False
