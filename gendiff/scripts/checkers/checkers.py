@@ -36,6 +36,15 @@ def is_only_second_value_dict(value_1, value_2):
     return False
 
 
+def is_second_dict_first_not_type(value_1, value_2):
+    if dict in (type(value_1), type(value_2)):
+        if value_1 != value_2 and \
+                type(value_1) is not type and \
+                type(value_2) is dict:
+            return True
+    return False
+
+
 def is_first_dict_second_value(value_1, value_2):
     if dict in (type(value_1), type(value_2)):
         if value_1 != value_2 and type(

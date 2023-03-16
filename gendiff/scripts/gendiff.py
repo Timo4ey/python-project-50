@@ -29,7 +29,10 @@ def main():
     file1, file2, style = command()
     first_data, second_data = prepare_data(file1, file2)
     method = methods.get(style)
+
     output = method(first_data, second_data)
+    with open("temp_recurs2.txt", 'w') as f:
+        f.write(output)
     print(output)
 
 

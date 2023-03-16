@@ -6,7 +6,8 @@ from gendiff.scripts.checkers.checkers import (is_dicts_equals,
                                                is_only_first_value_dict,
                                                is_only_second_value_dict,
                                                is_first_dict_second_value,
-                                               check_values_forms)
+                                               check_values_forms,
+                                               is_second_dict_first_not_type)
 from gendiff.scripts.formartter.formartter import convert_to_format
 from gendiff.scripts.get_unique_keys.unique_keys import getting_unique_keys
 
@@ -36,6 +37,20 @@ def compare_two_values(space_filler: str, key, value_1, value_2) -> list[str]:
     return output
 
 
+def first_or_second_dict(space_filler, key, value_1, value_2, next_depth):
+    output = []
+    if is_first_dict_second_value(value_1, value_2):
+        output = [*convert_to_format(space_filler, '-', key, stringify(
+            array=value_1, space_count=next_depth)),
+            *convert_to_format(space_filler, '+', key, value_2)]
+    elif is_second_dict_first_not_type(value_1, value_2):
+        output = [*convert_to_format(space_filler, '-', key, value_1),
+                  *convert_to_format(
+                      space_filler, '+', key, stringify(
+                          array=value_2, space_count=next_depth))]
+    return output
+
+
 def compare_two_dicts(space_filler: str, key,
                       value_1: dict, value_2: dict, depth=0):
     next_depth = 3
@@ -58,10 +73,10 @@ def compare_two_dicts(space_filler: str, key,
         output = convert_to_format(space_filler, '+', key, stringify(
             array=value_2, space_count=next_depth))
     # 5
-    elif is_first_dict_second_value(value_1, value_2):
-        output = [*convert_to_format(space_filler, '-', key, stringify(
-            array=value_1, space_count=next_depth)),
-            *convert_to_format(space_filler, '+', key, value_2)]
+    elif is_first_dict_second_value(value_1, value_2) or\
+            is_second_dict_first_not_type(value_1, value_2):
+        output = first_or_second_dict(space_filler,
+                                      key, value_1, value_2, next_depth)
     return output
 
 

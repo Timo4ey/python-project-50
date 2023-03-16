@@ -29,6 +29,15 @@ def files_loader(path):
     return list_if_files
 
 
+# def test_stylish_2():
+#     path1 = "tests/tests_2/fixtures/file1.json"
+#     path2 = "tests/tests_2/fixtures/file2.json"
+#     file1, file2 = prepare_data(path1, path2)
+#     result = generate_diff(file1, file2)
+#     answer = files_loader(files_reader("tests/tests_2/fixtures/result_stylish"))
+#     assert result == answer
+
+
 def test_generate_diff_json():
 
     jsn_files = json_loader(files_loader(files_reader('tests/fixtures/answers/jsons.txt')))
@@ -49,14 +58,14 @@ def test_generate_diff_yaml():
 def test_stylish_json():
     file1, file2 = prepare_data("test_5_recurs_file1.json", "test_5_recurs_file2.json")
     result = stylish(file1, file2)
-    answer = files_reader('tests/fixtures/answers/test_5_recurs.txt')
+    answer = files_reader('tests/fixtures/answers/test_5_recurs')
     assert result == answer
 
 
 def test_stylish_yml():
     file1, file2 = prepare_data("test_5_yaml_file1.yml", "test_5_yaml_file2.yml")
     result = stylish(file1, file2)
-    answer = files_reader('tests/fixtures/answers/test_5_recurs.txt')
+    answer = files_reader('tests/fixtures/answers/test_5_recurs')
     assert result == answer
 
 
