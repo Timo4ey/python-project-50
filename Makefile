@@ -25,7 +25,5 @@ tests-coverage:
 install:
 	poetry install
 
-push-git:
-	check
-	lint
+push-git &: check lint
 	git push
