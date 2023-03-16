@@ -1,4 +1,3 @@
-from gendiff.prepare_data.prepare_data import (prepare_data)
 from gendiff.scripts.compare_data.compare_data import compare_engine
 
 
